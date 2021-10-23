@@ -34,9 +34,9 @@
 ### Запуск приложения
 Выполните команду: `npm start`
 
-РАЗРАБОТЧИКИ
+РАЗНОРАБОТЧИКИ
 
-<h4>Илья Максимов golang developer [@makasinov](https://t.me/makasinov)</h4>
-<h4>Евгений Ондрин frontend developer [@ondrin](https://t.me/ondrin)</h4>
-<h4>Илья Андреев fullstack developer [@bzlio](https://t.me/bzlio)</h4>
-<h4>Михаил Смирнов [@mizhash](https://t.me/mizhash)</h4>
+- Илья Максимов golang developer [@makasinov](https://t.me/makasinov)
+- Евгений Ондрин frontend developer [@ondrin](https://t.me/ondrin)
+- Илья Андреев fullstack developer [@bzlio](https://t.me/bzlio)
+- Михаил Смирнов [@mizhash](https://t.me/mizhash)
