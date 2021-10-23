@@ -69,7 +69,6 @@ const info = [
     title: 'Снабжающие склады',
     price: 'нехватка сырья',
     description: ['склад Q313M', 'наполняется: ', 'G_APPH', 'G_ANGCH'],
-    buttonText: 'решить проблему',
     buttonVariant: 'outlined',
   },
   {
@@ -91,7 +90,6 @@ const info = [
       'G_NTAH, G_ANOH, G_ST203H',
       'G_APOR'
     ],
-    buttonText: 'решить проблему',
     buttonVariant: 'outlined',
   },
 ];
