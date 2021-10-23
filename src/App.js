@@ -7,12 +7,13 @@ import { Dashboard } from "./components/Dashboard";
 
 import PostIcon from '@material-ui/icons/Book';
 import UserIcon from '@material-ui/icons/Group';
+import {Planning} from "./components/Planning";
 
 const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 
 const App = () => (
     <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-            <Resource name="Planning" list={ Dashboard }  icon={PostIcon} />
+            <Resource name="Planning" list={ Planning }  icon={PostIcon} />
             <Resource name="Analytics" list={ Dashboard } icon={UserIcon} />
     </Admin>
 );
