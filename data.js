@@ -1,4 +1,4 @@
-module.exports = {
+const data = {
     ResourceWarehouse: [
         {
             HasConstraintViolations: false,

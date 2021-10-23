@@ -3,32 +3,23 @@ import {
     VictoryGroup,
     VictoryStack,
     VictoryBar,
-    VictoryLabel
+    VictoryLabel,
+    VictoryTooltip
 } from 'victory';
 
 export const DashboardKpiChart = ({ kpiRecord }) => {
     const { indicators, category  } = kpiRecord;
-    // TODO: remove stabs
-    const dates = Object.keys(indicators[0].marksByDays);
-    const indicatorsByDates = dates.reduce((acc, date) => {
-        const indicatorsByDate = indicators.map(indicatorRecord => ({
-            indicator: indicatorRecord.indicator,
-            value: indicatorRecord.marksByDays[date]
-        }));
-
-        acc[date] = indicatorsByDate;
-        return acc;
-    }, {});
-    // TODO: remove stabs
-    const dataToRender = Object.entries(indicatorsByDates).map(([date, indicators], index) => {
-        return indicators.map((indicator) => {
-            const data = {
+    // const colors = ["tomato", "lightgreen", "blueviolet", "lightblue", "aqua"]
+    const colors = ["#003f5c", "#58508d", "#bc5090", "#ff6361", "#ffa600"];
+    const dataToRender = indicators.map(indicator => {
+        return {
+            label: indicator.indicator,
+            bars: Object.entries(indicator.marksByDays).map(([date, value]) => ({
                 x: date,
-                y: indicator.value
-            }
-            return data;
-        })
-    });
+                y: parseInt(value)
+            }))
+        }
+    })
 
     return (
         <VictoryChart domainPadding={{ x: 70 }} >
@@ -38,10 +29,16 @@ export const DashboardKpiChart = ({ kpiRecord }) => {
                 textAnchor="middle"
                 text={category}
             />
-            <VictoryGroup offset={5} style={{ data: { width: 10 } }}>
-                { dataToRender.map((element, idx) => (
-                    <VictoryStack key={idx} colorScale={"blue"}>
-                        <VictoryBar data={element}/>
+            <VictoryGroup offset={15} style={{ data: { width: 10 } }}>
+                { dataToRender.map((indicator, idx) => (
+                    <VictoryStack key={idx}>
+                        <VictoryBar
+                            style={{
+                                data: { fill: colors[idx] }
+                            }}
+                            labelComponent={<VictoryTooltip/>}
+                            labels={({ datum }) => `${indicator.label} - ${datum.y} %`}
+                            data={indicator.bars}/>
                     </VictoryStack>
                 )) }
             </VictoryGroup>

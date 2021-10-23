@@ -4,9 +4,8 @@ import {
     CardHeader,
     Grid
 } from '@material-ui/core';
-import {
-    DashboardKpiChart
-} from "./DashboardKpiChart";
+import { DashboardKpiChart } from "./DashboardKpiChart";
+import { KpiChartIndicator } from "./KpiChartIndicator";
 import {
     useState
 } from "react";
@@ -15,6 +14,7 @@ const KPI_DATA = [
     {
         "Область": "Прием заказов",
         "Показатель": "Заказы не прошедшие проверку на техническую исполнимость",
+        "goal": '< 1',
         "9/30/21": "2%",
         "10/1/21": "1%",
         "10/4/21": "3%",
@@ -24,6 +24,7 @@ const KPI_DATA = [
     {
         "Область": "Управление квотами",
         "Показатель": "% заполнения квот",
+        "goal": '> 80',
         "9/30/21": "65%",
         "10/1/21": "66%",
         "10/4/21": "66%",
@@ -33,6 +34,7 @@ const KPI_DATA = [
     {
         "Область": "Календарное планирование",
         "Показатель": "Загрузка оборудования",
+        "goal": '> 85',
         "9/30/21": "87%",
         "10/1/21": "85%",
         "10/4/21": "89%",
@@ -41,6 +43,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Плановый OTIF",
+        "goal": '> 90',
         "9/30/21": "91%",
         "10/1/21": "91%",
         "10/4/21": "91%",
@@ -49,6 +52,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Нарушение уровней запасов",
+        "goal": '< 15',
         "9/30/21": "15%",
         "10/1/21": "20%",
         "10/4/21": "21%",
@@ -57,6 +61,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Загрузка кампаний",
+        "goal": '> 80',
         "9/30/21": "75%",
         "10/1/21": "80%",
         "10/4/21": "85%",
@@ -65,6 +70,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Обязательный горячий посад, %",
+        "goal": '> 80',
         "9/30/21": "27%",
         "10/1/21": "17%",
         "10/4/21": "27%",
@@ -74,6 +80,7 @@ const KPI_DATA = [
     {
         "Область": "Комбинирование заказов",
         "Показатель": "Формирование и передача комбинаций",
+        "goal": '< 90',
         "9/30/21": "99%",
         "10/1/21": "98%",
         "10/4/21": "99%",
@@ -83,6 +90,7 @@ const KPI_DATA = [
     {
         "Область": "Графикование конверторов",
         "Показатель": "Составление и передача серий",
+        "goal": '> 80',
         "9/30/21": "75%",
         "10/1/21": "74%",
         "10/4/21": "71%",
@@ -91,6 +99,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Следование календарному плану",
+        "goal": '< 70',
         "9/30/21": "60%",
         "10/1/21": "70%",
         "10/4/21": "50%",
@@ -100,6 +109,7 @@ const KPI_DATA = [
     {
         "Область": "Графикование горячих цехов",
         "Показатель": "Составление и передача монтажей",
+        "goal": '< 70',
         "9/30/21": "70%",
         "10/1/21": "71%",
         "10/4/21": "69%",
@@ -108,6 +118,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Следование календарному плану",
+        "goal": '< 70',
         "9/30/21": "50%",
         "10/1/21": "40%",
         "10/4/21": "47%",
@@ -116,6 +127,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Уровень резервирования",
+        "goal": '> 80',
         "9/30/21": "80%",
         "10/1/21": "85%",
         "10/4/21": "83%",
@@ -125,6 +137,7 @@ const KPI_DATA = [
     {
         "Область": "Составление сменно-суточных заданий",
         "Показатель": "% составления ССЗ",
+        "goal": '< 50',
         "9/30/21": "30%",
         "10/1/21": "35%",
         "10/4/21": "40%",
@@ -133,6 +146,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "Уровень резервирования",
+        "goal": '> 80',
         "9/30/21": "80%",
         "10/1/21": "81%",
         "10/4/21": "79%",
@@ -141,6 +155,7 @@ const KPI_DATA = [
     },
     {
         "Показатель": "% составления заданий через контур системы",
+        "goal": '> 80',
         "9/30/21": "90%",
         "10/1/21": "85%",
         "10/4/21": "83%",
@@ -156,6 +171,7 @@ const normalizedKPIData = (KPI_DATA) => {
         const {
             'Область': category,
             'Показатель': indicator,
+            goal,
             ...marksByDays
         } = kpiRecord;
 
@@ -170,6 +186,7 @@ const normalizedKPIData = (KPI_DATA) => {
         return {
             category: currentCategory,
             indicator,
+            goal,
             marksByDays: marksByDays
         };
     });
@@ -188,14 +205,14 @@ export const Dashboard = () => {
     const [ activeKpi, setActiveKpi ] = useState();
 
     const handleClick = (activeKpiRecord) => {
-        setLeftSideSize(sideEnable ? 6 : 12);
+        setLeftSideSize(sideEnable ? 4 : 12);
         setSideEnable(true);
         setActiveKpi(activeKpiRecord);
     }
 
     return (
         <Card>
-            <CardHeader title="Welcome to the administration" />
+            <CardHeader title="KPI" />
             <CardContent>
                 <Grid container spacing={2}>
                     <Grid container item xs={leftSideSize}>
@@ -206,8 +223,8 @@ export const Dashboard = () => {
                         )) }
                     </Grid>
                     { sideEnable &&
-                        <Grid item xs={6}>
-                            <DashboardKpiChart kpiRecord={activeKpi} />
+                        <Grid item xs={8}>
+                            <KpiChartIndicator kpiRecord={activeKpi} />
                         </Grid>
                     }
                 </Grid>
