@@ -1,219 +1,73 @@
-import {VictoryBar, VictoryChart, VictoryStack, VictoryGroup, VictoryAxis} from 'victory';
+import {VictoryBar, VictoryChart, VictoryStack, VictoryGroup } from 'victory';
+import logo from '../example.jpg'
+import {useState} from "react";
 
-// const groupedAggregates = [
-//     {
-//         date: '07.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 90,
-//                 unavailablePercentage: 24,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 54,
-//                 unavailablePercentage: 10,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 12,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 3,
-//             }
-//         }]
-//     },
-//     {
-//         date: '08.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 84,
-//                 unavailablePercentage: 30,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 60,
-//                 unavailablePercentage: 7,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 12,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 3,
-//             }
-//         }]
-//     },
-//     {
-//         date: '09.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 88,
-//                 unavailablePercentage: 32,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 64,
-//                 unavailablePercentage: 9,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 12,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 3,
-//             }
-//         }]
-//     },
-//     {
-//         date: '10.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 88,
-//                 unavailablePercentage: 32,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 64,
-//                 unavailablePercentage: 9,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 12,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 3,
-//             }
-//         }]
-//     },
-//     {
-//         date: '11.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 90,
-//                 unavailablePercentage: 30,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 64,
-//                 unavailablePercentage: 10,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 94,
-//                 unavailablePercentage: 13,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 4,
-//             }
-//         }]
-//     },
-//     {
-//         date: '12.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 90,
-//                 unavailablePercentage: 30,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 64,
-//                 unavailablePercentage: 10,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 94,
-//                 unavailablePercentage: 13,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 4,
-//             }
-//         }]
-//     },
-//     {
-//         date: '13.10.2021',
-//         warehouses: [{
-//             "КЦ-1": {
-//                 occupiedPercentage: 91,
-//                 unavailablePercentage: 32,
-//             },
-//             "КЦ-2": {
-//                 occupiedPercentage: 65,
-//                 unavailablePercentage: 10,
-//             },
-//             "ЦТС": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: 13,
-//             },
-//             "ЦХПП": {
-//                 occupiedPercentage: 100,
-//                 unavailablePercentage: '2%',
-//             }
-//         }]
-//     }
-// ];
 
 export const PlanningChart = () => {
+    const [isHidden, setIsHidden] = useState(true)
     const groupedAggregates = [
         {
             "КЦ-1": {
-                date: '7.10.2021',
+                date: '07.10.2021',
                 occupiedPercentage: 90,
                 unavailablePercentage: 24,
             },
             "КЦ-2": {
-                date: '7.10.2021',
+                date: '07.10.2021',
                 occupiedPercentage: 54,
                 unavailablePercentage: 10,
             },
             "ЦТС": {
-                date: '7.10.2021',
+                date: '07.10.2021',
                 occupiedPercentage: 100,
                 unavailablePercentage: 12,
             },
             "ЦХПП": {
-                date: '7.10.2021',
+                date: '07.10.2021',
                 occupiedPercentage: 100,
                 unavailablePercentage: 3,
             }
         },
         {
             "КЦ-1": {
-                date: '8.10.2021',
+                date: '08.10.2021',
                 occupiedPercentage: 84,
                 unavailablePercentage: 30,
             },
             "КЦ-2": {
-                date: '8.10.2021',
+                date: '08.10.2021',
                 occupiedPercentage: 60,
                 unavailablePercentage: 7,
             },
             "ЦТС": {
-                date: '8.10.2021',
+                date: '08.10.2021',
                 occupiedPercentage: 100,
                 unavailablePercentage: 12,
             },
             "ЦХПП": {
-                date: '8.10.2021',
+                date: '08.10.2021',
                 occupiedPercentage: 100,
                 unavailablePercentage: 3,
             }
         },
         {
             "КЦ-1": {
-                date: '9.10.2021',
-                occupiedPercentage: 88,
+                date: '09.10.2021',
+                occupiedPercentage: 78,
                 unavailablePercentage: 32,
             },
             "КЦ-2": {
-                date: '9.10.2021',
+                date: '09.10.2021',
                 occupiedPercentage: 64,
                 unavailablePercentage: 9,
             },
             "ЦТС": {
-                date: '9.10.2021',
+                date: '09.10.2021',
                 occupiedPercentage: 100,
                 unavailablePercentage: 12,
             },
             "ЦХПП": {
-                date: '9.10.2021',
+                date: '09.10.2021',
                 occupiedPercentage: 100,
                 unavailablePercentage: 3,
             }
@@ -308,28 +162,19 @@ export const PlanningChart = () => {
         }
     ];
 
-    function groupAggregatesByDay(aggregates) {
-        const keys = Object.keys(el);
-        const result = [];
-        aggregates.forEach((el) => {
-            keys.forEach((key) => {
-                if (!obj[el[key].date]){
-                    result.push({
-                        name: key,
-                        occupiedPercentage: el[key].occupiedPercentage,
-                        unavailablePercentage: el[key].unavailablePercentage,
-                    })
-                } else {
-
-                }
-            })
-        });
-
+    const size = {
+        width: '1200px',
+        height: '500px',
+    }
+    let imgStyle = {
+        width: '900px',
+        height: '350px',
+        marginLeft: '160px',
+        position: 'absolute',
     }
 
-    const chartContainerStyle = {
-        width: '1200px',
-        height: '600px',
+    function clickHandler() {
+        setIsHidden(!isHidden)
     }
 
     const getOccupiedPercentage = () => {
@@ -337,7 +182,7 @@ export const PlanningChart = () => {
             const keys = Object.keys(el);
             const result = [];
             keys.forEach((key) => {
-                result.push({x:el[key].date, y: 100 / 100 * el[key].occupiedPercentage})
+                result.push({x:el[key].date, y: 1000 / 100 * el[key].occupiedPercentage})
             })
             return result
         });
@@ -347,35 +192,38 @@ export const PlanningChart = () => {
             const keys = Object.keys(el);
             const result = [];
             keys.forEach((key) => {
-                console.log(key)
-                result.push({x:el[key].date, y: 100 / 100 * el[key].unavailablePercentage})
+                result.push({x:el[key].date, y: 1000 / 100 * el[key].unavailablePercentage})
             })
             return result
         });
     };
+
+    const divStyle = {
+        position: "absolute",
+        width: '50px',
+        height: '380px',
+        bottom: '455px',
+        left: '445px'
+    };
+
     return (
-        <div style={chartContainerStyle}>
+        <div style={size}>
             <VictoryChart domainPadding={{x: 50}} width={800} height={400}>
                 <VictoryGroup offset={5} style={{data: {width: 15}}}>
                     <VictoryStack style={{data:{fill:"gray"}}} >
                         {getOccupiedPercentage().map((data, index) => {
-                            return <VictoryBar key={index} data={data}/>;
+                            return <VictoryBar onClick={() => {console.log(1)}}  style={{ labels: { fill: "black" } }} key={index} data={data}/>;
                         })}
                     </VictoryStack>
                     <VictoryStack  style={{data:{fill: "red", width:5}}}>
                         {getUnavailablePercentage().map((data, index) => {
-                            return <VictoryBar key={index} data={data}/>;
+                            return <VictoryBar   style={{ labels: { fill: "black" } }} key={index} data={data}/>;
                         })}
                     </VictoryStack>
-                    <VictoryAxis
-                        tickValues={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
-                    />
-                    <VictoryAxis
-                        dependentAxis
-                        tickFormat={(x) => (`$${x / 1000}k`)}
-                    />
                 </VictoryGroup>
             </VictoryChart>
+            {isHidden ? null : <img id={'img'} style={imgStyle} src={logo}/>}
+            <div isHidden onClick={() => {clickHandler()}} style={divStyle}></div>
         </div>
     );
 }
