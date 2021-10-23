@@ -35,6 +35,8 @@
 - `git checkout wip/client`
 - `npm install` 
 - `npm start`
+Если браузер не открылся автоматически - открыть http://localhost:3000   
+Данные для авторизации admin - superadmin
 
 РАЗНОРАБОТЧИКИ
 
