@@ -85,7 +85,7 @@ function getWarehousesId({ ResourceWarehouse, Remains }) {
             }
           });
         } else {
-          warehouses[warehouseId].likeInput.push(obj.Id)
+          if (!warehouses[warehouseId].likeInput.includes(obj.Id)) warehouses[warehouseId].likeInput.push(obj.Id)
         }
       })
     }
@@ -112,7 +112,7 @@ function getWarehousesId({ ResourceWarehouse, Remains }) {
             }
           });
         } else {
-          warehouses[warehouseId].likeOutput.push(obj.Id)
+          if (!warehouses[warehouseId].likeOutput.includes(obj.Id)) warehouses[warehouseId].likeOutput.push(obj.Id)
         }
       })
     }
@@ -166,5 +166,49 @@ problemsAgregateWithWarehouse.forEach(({ machineId, InputSP, OutputSP, dayWithLo
   })
 });
 
-fs.writeFile('./analizeWarhouses.json', JSON.stringify(analizeWarhouses));
+const infoByMachine = {};
+problemsAgregateWithWarehouse.forEach(({ machineId }) => {
+  const machineProblems = analizeWarhouses[machineId];
+  const resultFromAnalysis = Object.keys(machineProblems);
 
+  infoByMachine[machineId] = {};
+  infoByMachine[machineId].agregateBefore = {};
+  const agregateBefore = infoByMachine[machineId].agregateBefore;
+  resultFromAnalysis.forEach(timestamp => {
+    agregateBefore[timestamp] = {};
+    const inputProblem = machineProblems[timestamp].inputInfo;
+    Object.keys(inputProblem).forEach(warhouse => {
+      if (!inputProblem[warhouse]) return;
+      const supplyAgregateWithProblem = warehouses[warhouse].likeInput;
+      agregateBefore[timestamp] = supplyAgregateWithProblem.map(agregateId => {
+        const agregateFromListOfInput = agregateWithValidOccupied.find(({ machineId: machineIdFromFullBase, dStart }) => machineIdFromFullBase === agregateId && new Date(dStart).getTime() === timestamp);
+        return {
+          machineId: agregateId,
+          occupiedPercentage: agregateFromListOfInput ? agregateFromListOfInput.OccupiedPercentage : 'no data'
+        }
+      })
+    })
+  });
+
+  infoByMachine[machineId].agregateAfter = {};
+  const agregateAfter = infoByMachine[machineId].agregateAfter;
+  resultFromAnalysis.forEach(timestamp => {
+    agregateAfter[timestamp] = {};
+    const outputProblem = machineProblems[timestamp].outputInfo;
+    Object.keys(outputProblem).forEach(warhouse => {
+      if (!outputProblem[warhouse]) return;
+      const supplyAgregateWithProblem = warehouses[warhouse].likeOutput;
+      agregateAfter[timestamp] = supplyAgregateWithProblem.map(agregateId => {
+        const agregateFromListOfInput = agregateWithValidOccupied.find(({ machineId: machineIdFromFullBase, dStart }) => machineIdFromFullBase === agregateId && new Date(dStart).getTime() === timestamp);
+        return {
+          machineId: agregateId,
+          occupiedPercentage: agregateFromListOfInput ? agregateFromListOfInput.OccupiedPercentage : 'no data'
+        }
+      })
+    })
+  });
+})
+
+fs.writeFile('./analyzeMostLowWorkedAgregate.json', JSON.stringify(moreThanFiveProblems));
+fs.writeFile('./analyzeWarhouses.json', JSON.stringify(analizeWarhouses));
+fs.writeFile('./analyzeSupplyAndConsumption.json', JSON.stringify(infoByMachine));

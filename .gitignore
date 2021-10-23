@@ -1,2 +1,4 @@
 .idea
-analizeWarhouses.json
+analyzeMostLowWorkedAgregate.json
+analyzeWarhouses.json
+analyzeSupplyAndConsumption.json
