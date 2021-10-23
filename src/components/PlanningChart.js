@@ -201,8 +201,8 @@ export const PlanningChart = () => {
     const divStyle = {
         position: "absolute",
         width: '50px',
-        height: '380px',
-        bottom: '455px',
+        height: '100%',
+        bottom: '0',
         left: '445px'
     };
 
@@ -223,7 +223,7 @@ export const PlanningChart = () => {
                 </VictoryGroup>
             </VictoryChart>
             {isHidden ? null : <img id={'img'} style={imgStyle} src={logo}/>}
-            <div isHidden onClick={() => {clickHandler()}} style={divStyle}></div>
+            <div onClick={() => clickHandler()} style={divStyle}></div>
         </div>
     );
 }
