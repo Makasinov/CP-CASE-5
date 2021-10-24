@@ -4,11 +4,26 @@ import {
     CardHeader,
     Grid
 } from '@material-ui/core';
-import { DashboardKpiChart } from "./DashboardKpiChart";
-import { KpiChartIndicator } from "./KpiChartIndicator";
+import { KpiCategoryChart } from "./KpiCategoryChart";
+import { KpiIndicatorChart } from "./KpiIndicatorChart";
 import {
     useState
 } from "react";
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    chart: {
+        transition: 'all 0.5s easy-out',
+        cursor: 'pointer',
+        '&:hover': {
+            backgroundColor: '#efefef'
+        },
+    },
+    active: {
+        backgroundColor: '#efefef'
+    }
+});
 
 const KPI_DATA = [
     {
@@ -202,12 +217,19 @@ const kpiData = normalizedKPIData(KPI_DATA);
 export const Dashboard = () => {
     const [ sideEnable, setSideEnable ] = useState(false);
     const [ leftSideSize, setLeftSideSize ] = useState(12);
-    const [ activeKpi, setActiveKpi ] = useState();
+    const [ activeKpi, setActiveKpi ] = useState(null);
+    const classes = useStyles();
 
     const handleClick = (activeKpiRecord) => {
-        setLeftSideSize(sideEnable ? 4 : 12);
+        setLeftSideSize(4);
         setSideEnable(true);
         setActiveKpi(activeKpiRecord);
+    }
+
+    const handleBack = () => {
+        setLeftSideSize(12);
+        setSideEnable(false);
+        setActiveKpi(null);
     }
 
     return (
@@ -217,14 +239,14 @@ export const Dashboard = () => {
                 <Grid container spacing={2}>
                     <Grid container item xs={leftSideSize}>
                         { kpiData.map((data, index) => (
-                            <Grid onClick={() => handleClick(data)} key={index} item xs={ 6 }>
-                                <DashboardKpiChart kpiRecord={data} />
+                            <Grid className={`${classes.chart} ${activeKpi === data ? classes.active : ''}`} onClick={() => handleClick(data)} key={index} item xs={ sideEnable ? 6 : 4 }>
+                                <KpiCategoryChart kpiRecord={data} />
                             </Grid>
                         )) }
                     </Grid>
                     { sideEnable &&
                         <Grid item xs={8}>
-                            <KpiChartIndicator kpiRecord={activeKpi} />
+                            <KpiIndicatorChart handleBack={handleBack} kpiRecord={activeKpi} />
                         </Grid>
                     }
                 </Grid>

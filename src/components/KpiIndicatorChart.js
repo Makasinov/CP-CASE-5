@@ -1,4 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/Button';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import {
+    Grid
+} from '@material-ui/core';
 
 const useStyles = makeStyles({
     chart: {
@@ -45,7 +50,7 @@ const useStyles = makeStyles({
     }
 });
 
-export const KpiChartIndicator = ({ kpiRecord }) => {
+export const KpiIndicatorChart = ({ kpiRecord, handleBack }) => {
     const { indicators, category  } = kpiRecord;
     const classes = useStyles();
 
@@ -59,12 +64,10 @@ export const KpiChartIndicator = ({ kpiRecord }) => {
                 y: parseInt(value)
             }))
         }
-    })
-
-    console.log('dataToRenderd', dataToRender)
+    });
 
     const calculateWidth = (width) => {
-        return width < 10 ? width + 20 : width;
+        return width < 10 ? width + 30 : width;
     }
 
     const createStyles = (bar, index) => ({
@@ -73,8 +76,6 @@ export const KpiChartIndicator = ({ kpiRecord }) => {
     })
 
     const createGoalStyles = (goal) => {
-        const type = goal.substring(0, 1);
-
         return {
             position: 'absolute',
             top: '-10px',
@@ -85,32 +86,43 @@ export const KpiChartIndicator = ({ kpiRecord }) => {
         }
     }
 
+    const handleClick = () => {
+        handleBack()
+    }
+
     return (
-        <div className={classes.chart}>
-            <div className={classes.chartTitle}>{category}</div>
-            <div className={classes.chartContent}>
-                { dataToRender.map((indicator, indicatorIndex) => {
-                    return (
-                        <div className={classes.chartGroup} key={indicatorIndex}>
-                            <div className={classes.chartBarTitle}>{indicator.label}</div>
-                            <div style={createGoalStyles(indicator.goal)}></div>
-                            <div
+        <div>
+            <Grid container justify="flex-end">
+                <IconButton sx={{ textAlign: 'left' }} onClick={handleClick} size="small">
+                    <ArrowRightIcon />
+                </IconButton>
+            </Grid>
+            <div className={classes.chart}>
+                <div className={classes.chartTitle}>{category}</div>
+                <div className={classes.chartContent}>
+                    { dataToRender.map((indicator, indicatorIndex) => {
+                        return (
+                          <div className={classes.chartGroup} key={indicatorIndex}>
+                              <div className={classes.chartBarTitle}>{indicator.label}</div>
+                              <div style={createGoalStyles(indicator.goal)}></div>
+                              <div
                                 className={`${classes.chartBar}`}
                                 key={0}
                                 style={createStyles(indicator.bars[0], indicatorIndex)}
-                            >
-                                <div className={classes.chartBarPer}>{indicator.bars[0].y}%</div>
-                            </div>
-                            <div
+                              >
+                                  <div className={classes.chartBarPer}>{indicator.bars[0].y}%</div>
+                              </div>
+                              <div
                                 className={`${classes.chartBar} ${classes.chartBarBottom}`}
                                 key={1}
                                 style={createStyles(indicator.bars[1], indicatorIndex)}
-                            >
-                                <div className={classes.chartBarPerBottom}>{indicator.bars[0].y}%</div>
-                            </div>
-                        </div>
-                    )
-                }) }
+                              >
+                                  <div className={classes.chartBarPerBottom}>{indicator.bars[0].y}%</div>
+                              </div>
+                          </div>
+                        )
+                    }) }
+                </div>
             </div>
         </div>
     )

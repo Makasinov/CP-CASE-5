@@ -7,7 +7,7 @@ import {
     VictoryTooltip
 } from 'victory';
 
-export const DashboardKpiChart = ({ kpiRecord }) => {
+export const KpiCategoryChart = ({ kpiRecord }) => {
     const { indicators, category  } = kpiRecord;
     // const colors = ["tomato", "lightgreen", "blueviolet", "lightblue", "aqua"]
     const colors = ["#003f5c", "#58508d", "#bc5090", "#ff6361", "#ffa600"];
